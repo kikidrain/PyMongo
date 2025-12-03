@@ -15,17 +15,17 @@ characters = [
 ]
 
 monsters = [
-    {"name": "Gobelin", "attack": 9, "defense": 5, "health": 50, "team": None},
-    {"name": "Orc", "attack": 19, "defense": 8, "health": 120, "team": None},
-    {"name": "Dragon", "attack": 34, "defense": 20, "health": 300, "team": None},
-    {"name": "Zombie", "attack": 11, "defense": 6, "health": 70, "team": None},
-    {"name": "Troll", "attack": 24, "defense": 15, "health": 200, "team": None},
-    {"name": "Spectre", "attack": 17, "defense": 10, "health": 100, "team": None},
-    {"name": "Golem", "attack": 25, "defense": 28, "health": 250, "team": None},
-    {"name": "Vampire", "attack": 21, "defense": 12, "health": 150, "team": None},
-    {"name": "Loup-garou", "attack": 27, "defense": 16, "health": 180, "team": None},
-    {"name": "Squelette", "attack": 14, "defense": 7, "health": 75, "team": None},
-    {"name": "André", "attack": 30, "defense": 40, "health": 60, "team": "Bravm"}  #on verra plus tard
+    {"name": "Gobelin", "attack": 9, "defense": 5, "health": 50, "clan": None},
+    {"name": "Orc", "attack": 19, "defense": 8, "health": 120, "clan": None},
+    {"name": "Dragon", "attack": 34, "defense": 20, "health": 300, "clan": None},
+    {"name": "Zombie", "attack": 11, "defense": 6, "health": 70, "clan": None},
+    {"name": "Troll", "attack": 24, "defense": 15, "health": 200, "clan": None},
+    {"name": "Spectre", "attack": 17, "defense": 10, "health": 100, "clan": None},
+    {"name": "Golem", "attack": 25, "defense": 28, "health": 250, "clan": None},
+    {"name": "Vampire", "attack": 21, "defense": 12, "health": 150, "clan": None},
+    {"name": "Loup-garou", "attack": 27, "defense": 16, "health": 180, "clan": None},
+    {"name": "Squelette", "attack": 14, "defense": 7, "health": 75, "clan": None},
+    {"name": "André", "attack": 30, "defense": 40, "health": 60, "clan": "BravM"}  #on verra plus tard
 ]
 
 
@@ -33,12 +33,12 @@ def main():
     client = MongoClient('mongodb://localhost:27017/')
     db = client["jeu_tpt"]
 
-    #supprimer les anciennes données
+    #supprimer les anciennes donnée
     db["characters"].delete_many({})
     db["monsters"].delete_many({})
     db["scores"].delete_many({})
 
-    #inserer les nouvelles 
+    #ajuouter les nouveau
     db["characters"].insert_many(characters)
     db["monsters"].insert_many(monsters)
 
