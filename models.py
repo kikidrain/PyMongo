@@ -14,7 +14,8 @@ class Entity: #entity pour éviter du code inutiles avec class perso et monstre
         return self.health > 0
     
     def take_damage(self, damage):
-        actual_damage = max(0, damage - self.defense)
+        reduction = self.defense * 0.15
+        actual_damage = int(max(1, damage - reduction))
         self.health -= actual_damage
         if self.health < 0:
             self.health = 0
@@ -22,5 +23,3 @@ class Entity: #entity pour éviter du code inutiles avec class perso et monstre
     
     def attack_target(self, target):
         return target.take_damage(self.attack)
-
-

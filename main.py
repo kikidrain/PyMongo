@@ -1,16 +1,16 @@
-from utils import get_database, get_choice, get_player_name
-from game import create_team, show_team
+from utils import get_database, get_choice, get_player_name, print_line, print_header, save_score
+from game import create_team, show_team, start_combat
 
 
 def print_menu():
     #menu principal
-    print("\n" + "─"*35)
-    print("    Voici le jeu de tout par tour")
-    print("─"*35)
+    print_header("Voici le jeu de tout par tour")
+
     print("\n1 Demarrer le jeu")
     print("2 Afficher le classement")
     print("3 Quitter")
-    print("\n" + "─"*35)
+    print("\n")
+    print_line()
 
 
 def main():
@@ -28,24 +28,40 @@ def main():
             break
 
 def start_new_game():
-    #demarrer la partie
     player_name = get_player_name()
     print(f"\nBienvenue {player_name}")
-    create_team()
+    team = create_team()
+    wave_number = 1
+    
+    while True:
+        for character in team:
+            character.health = character.max_health
+        
+        show_team(team)
+        team_dead = start_combat(team, wave_number)
+        
+        if team_dead == True:
+            if wave_number > 1:
+                final_score = wave_number - 1
+                save_score(player_name, final_score)
+                print_header(f"Score save vous avez survécu à {final_score} vagues")
+            input("\nAppuyer Entrée pour revenir au menu")
+            break
+        else:
+            wave_number = wave_number + 1
 
 def show_leaderboard():
-    db = get_database()
-    top_scores = list(db["scores"].find({}).sort("score", -1).limit(3))
-    print("\n" + "─"*35)
-    print("     Classement des meilleur scores")
-    print("─"*35)
+    top_scores = list(get_database()["scores"].find({}).sort("score", -1).limit(3))
+    print_header("Classement des meilleur scores")
+    
     if not top_scores:
         print("\nAucun score de save")
     else:
-        for i in range(len(top_scores)):
-            score = top_scores[i]
+        for i, score in enumerate(top_scores):
             print(f"{i+1}. {score['player_name']} - {score['score']} vagues")
-    print("─"*35)
+    
+    print_line()
+    input("\nAppuyer Entrée pour revenir au menu")
 
 
 
